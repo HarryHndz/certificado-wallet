@@ -38,6 +38,7 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json(metadata, {
     headers: {
+      "Access-Control-Allow-Origin": "*",
       "Cache-Control": "public, max-age=31536000, immutable",
     },
   });

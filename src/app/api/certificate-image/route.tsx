@@ -107,6 +107,10 @@ export async function GET(request: NextRequest) {
     {
       width: 1024,
       height: 1024,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "public, max-age=31536000, immutable",
+      },
     }
   );
 }
