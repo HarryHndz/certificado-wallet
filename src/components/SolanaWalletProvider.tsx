@@ -16,10 +16,6 @@ export function SolanaWalletProvider({ children }: { children: React.ReactNode }
     []
   );
 
-  console.log("endpoint", endpoint);
-  console.log("network", network);
-  console.log("process.env.NEXT_PUBLIC_SOLANA_RPC_URL", process.env.NEXT_PUBLIC_SOLANA_RPC_URL);
-
   const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
 
   const onError = useCallback((error: WalletError) => {

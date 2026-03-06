@@ -73,6 +73,10 @@ export function CelebrationScreen({ nombre, proyecto, mintAddress, onClose }: Ce
             Mint: {mintAddress}
           </p>
         </div>
+        <p className="mt-4 text-center text-xs text-zinc-500 dark:text-zinc-400">
+          ¿La imagen se ve en negro en Phantom? Despliega la app y configura{" "}
+          <code className="rounded bg-zinc-200 px-1 dark:bg-zinc-700">NEXT_PUBLIC_APP_URL</code> con tu URL pública.
+        </p>
         {onClose && (
           <button
             type="button"

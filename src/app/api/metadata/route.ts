@@ -10,11 +10,21 @@ export async function GET(request: NextRequest) {
   const proyecto = searchParams.get("p") ?? "Proyecto";
   const fecha = searchParams.get("d") ?? new Date().toISOString().split("T")[0];
 
+  // Usar URL pública para que la wallet pueda cargar la imagen (evita localhost)
+  const baseUrl =
+    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") || request.nextUrl.origin;
+  const imageParams = new URLSearchParams({
+    n: nombre,
+    p: proyecto,
+    d: fecha,
+  });
+  const imageUrl = `${baseUrl}/api/certificate-image?${imageParams.toString()}`;
+
   const metadata = {
     name: `Certificado - ${proyecto}`,
     description: `Certificado acreditando la participación de ${nombre} en el proyecto ${proyecto}.`,
-    image: "https://placehold.co/400x300/1a1a2e/eee?text=Certificado",
-    external_url: request.nextUrl.origin,
+    image: imageUrl,
+    external_url: baseUrl,
     attributes: [
       { trait_type: "Nombre", value: nombre },
       { trait_type: "Proyecto", value: proyecto },

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { WalletButton } from "@/components/WalletButton";
 import { CelebrationScreen } from "@/components/CelebrationScreen";
@@ -32,7 +33,11 @@ export function CertificateForm() {
     setLoading(true);
     try {
       const fecha = new Date().toISOString().split("T")[0];
-      const base = typeof window !== "undefined" ? window.location.origin : "";
+      const base =
+        (typeof window !== "undefined" &&
+          (process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") ||
+            window.location.origin)) ||
+        "";
       const params = new URLSearchParams({
         n: n,
         p: p,
@@ -76,8 +81,16 @@ export function CertificateForm() {
         <h1 className="mb-2 text-2xl font-bold text-zinc-900 dark:text-white">
           Generar certificado NFT
         </h1>
-        <p className="mb-6 text-zinc-600 dark:text-zinc-400">
+        <p className="mb-4 text-zinc-600 dark:text-zinc-400">
           Completa los datos y recibirás un certificado en tu wallet.
+        </p>
+        <p className="mb-6">
+          <Link
+            href="/ver"
+            className="text-sm text-indigo-600 hover:underline dark:text-indigo-400"
+          >
+            Ver un certificado por dirección (mint) →
+          </Link>
         </p>
 
         {!connected ? (
