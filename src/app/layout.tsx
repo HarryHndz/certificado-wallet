@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { PhantomWalletAdapter } from "@solana/wallet-adapter-phantom";
+import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
+import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
+import { clusterApiUrl } from "@solana/web3.js";
+import "@solana/wallet-adapter-react-ui/styles.css";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -22,13 +28,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const network = WalletAdapterNetwork.Devnet;
+  const endpoint = clusterApiUrl(network);
+  const wallets = [new PhantomWalletAdapter()];
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ConnectionProvider endpoint={endpoint}>
+      <WalletProvider wallets={wallets}>
+        <WalletModalProvider>
+          {children}
+        </WalletModalProvider>
+      </WalletProvider>
+    </ConnectionProvider>
   );
 }
